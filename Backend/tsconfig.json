@@ -1,15 +1,14 @@
 {
   "compilerOptions": {
-    "module": "NodeNext",
-    "moduleResolution": "NodeNext",
-    "target": "ESNext",
+    "target": "ES2020",
+    "module": "CommonJS",        
+    "moduleResolution": "bundler",  
     "outDir": "./dist",
     "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
-    "types": ["node"],           
-    "sourceMap": true
+    "types": ["node"] 
   },
-  "include": ["**/*"],
-  "exclude": ["node_modules", "dist", ".git"]
+  "include": ["**/*"], 
+  "exclude": ["node_modules", "dist", ".git"] 
 }
