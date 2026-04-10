@@ -2,6 +2,9 @@ import { Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
+
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const [auth, setAuth] = useState<{ isChecked: boolean; isValid: boolean }>({
     isChecked: false,
@@ -11,7 +14,7 @@ const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const checkAuth = async () => {
       try {
-        const response = await fetch("http://localhost:8080/api/v1/auth/verify", {
+        const response = await fetch(`${apiUrl}/api/v1/auth/verify`, {
           method: "GET",
           credentials: "include", 
         });

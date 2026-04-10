@@ -3,8 +3,11 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Search, ChevronLeft, ChevronRight, Loader2, Trash2, Edit2, AlertCircle} from 'lucide-react';
 import EditStudentModal from './EditStudentModal'; 
 
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
+
 const fetchStudents = async (page: number, search: string) => {
-  const res = await fetch(`http://localhost:8080/api/v1/admin/student/all?page=${page}&search=${encodeURIComponent(search)}`, {
+  const res = await fetch(`${apiUrl}/api/v1/admin/student/all?page=${page}&search=${encodeURIComponent(search)}`, {
     credentials: "include"
   });
   if (!res.ok) throw new Error("Failed to fetch");
@@ -36,7 +39,7 @@ const StudentsList: React.FC = () => {
 
   const deleteMutation = useMutation({
     mutationFn: async (id: string) => {
-      await fetch(`http://localhost:8080/api/v1/admin/student/remove-student/${id}`, {
+      await fetch(`${apiUrl}/api/v1/admin/student/remove-student/${id}`, {
         method: 'DELETE',
         credentials: "include"
       });

@@ -3,9 +3,12 @@ import { useQuery, useQueryClient} from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { Loader2, BookOpen, UserCheck, Calendar, LayoutList } from 'lucide-react';
 
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
+
 // Students fetch karne ke liye (Dropdown ke liye)
 const fetchAllStudents = async () => {
-  const res = await fetch("http://localhost:8080/api/v1/admin/student/all?limit=1000", { credentials: "include" });
+  const res = await fetch(`${apiUrl}/api/v1/admin/student/all?limit=1000`, { credentials: "include" });
   if (!res.ok) throw new Error("Failed to fetch students");
   return res.json();
 };
@@ -34,7 +37,7 @@ const handleSubmit = async (e: React.FormEvent) => {
     
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/api/v1/student/assign-homework/${formData.studentId}`, {
+      const response = await fetch(`${apiUrl}/api/v1/student/assign-homework/${formData.studentId}`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({

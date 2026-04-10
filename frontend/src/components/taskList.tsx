@@ -1,9 +1,11 @@
 import React, { useState, useMemo } from 'react'; 
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Loader2, ChevronRight, CheckCircle2, X, User } from 'lucide-react';
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
 
 const fetchAllTasks = async () => {
-  const res = await fetch("http://localhost:8080/api/v1/student/task/all", { credentials: "include" });
+  const res = await fetch(`${apiUrl}/api/v1/student/task/all`, { credentials: "include" });
   if (!res.ok) throw new Error("Failed to fetch");
   return res.json();
 };
@@ -31,7 +33,7 @@ const TasksList: React.FC = () => {
 
   const statusMutation = useMutation({
     mutationFn: async (taskId: string) => {
-      await fetch(`http://localhost:8080/api/v1/student/update/homework/${taskId}`, {
+      await fetch(`${apiUrl}/api/v1/student/update/homework/${taskId}`, {
         method: "POST",
         credentials: "include",
       });

@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useQueryClient } from '@tanstack/react-query'; 
 import { useNavigate } from 'react-router-dom';
 import { Loader2, GraduationCap, Users, User, Phone } from 'lucide-react';
-import { useQueryClient } from '@tanstack/react-query'; // Ise top par import karo
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
 
 const AddStudent: React.FC = () => {
   const navigate = useNavigate();
@@ -31,7 +33,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   };
 
   try {
-    const response = await fetch("http://localhost:8080/api/v1/admin/add-student", {
+    const response = await fetch(`${apiUrl}/api/v1/admin/add-student`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(finalData),

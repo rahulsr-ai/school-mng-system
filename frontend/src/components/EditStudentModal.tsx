@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import { useQueryClient, useMutation } from '@tanstack/react-query';
 import { X, Loader2} from 'lucide-react';
 
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
+
 export const EditStudentModal: React.FC<{ student: any; onClose: () => void }> = ({ student, onClose }) => {
   const queryClient = useQueryClient();
   const [formData, setFormData] = useState({
@@ -17,7 +20,7 @@ export const EditStudentModal: React.FC<{ student: any; onClose: () => void }> =
 
   const mutation = useMutation({
     mutationFn: async (updatedData: any) => {
-      const res = await fetch(`http://localhost:8080/api/v1/admin/edit-student/${student._id}`, {
+      const res = await fetch(`${apiUrl}/api/v1/admin/edit-student/${student._id}`, {
         method: "POST", // Aapne POST bola hai, wese update ke liye PATCH/PUT standard hai
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),

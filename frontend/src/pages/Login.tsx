@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Mail, Lock, LogIn, Loader2 } from 'lucide-react';
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
 
 const LoginPage = () => {
     const navigate = useNavigate();
@@ -12,7 +14,7 @@ const LoginPage = () => {
     useEffect(() => {
         const checkExistingAuth = async () => {
             try {
-                const response = await fetch("http://localhost:8080/api/v1/auth/verify", {
+                const response = await fetch(`${apiUrl}/api/v1/auth/verify`, {
                     method: "GET",
                     credentials: "include", 
                 });
@@ -33,7 +35,7 @@ const LoginPage = () => {
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>): Promise<void> => {
         e.preventDefault();
         try {
-            const response = await fetch("http://localhost:8080/api/v1/auth/login", {
+            const response = await fetch(`${apiUrl}/api/v1/auth/login`, {
                 method: "POST", 
                 headers: { "Content-Type": "application/json" },
                 body: JSON.stringify({ email, password }),

@@ -10,6 +10,8 @@ import {
   UserRoundPlus,
   ClipboardList
 } from 'lucide-react';
+const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
+
 
 const DashboardLayout: React.FC = () => {
   const navigate = useNavigate();
@@ -17,7 +19,7 @@ const DashboardLayout: React.FC = () => {
 
   const handleLogout = async () => {
     try {
-      const response = await fetch("http://localhost:8080/api/v1/auth/logout", {
+      const response = await fetch(`${apiUrl}/api/v1/auth/logout`, {
         method: "POST",
         credentials: "include", // Cookie clear karne ke liye zaroori hai
       });
