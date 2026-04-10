@@ -6,7 +6,8 @@
     "outDir": "./dist",
     "strict": false,
     "esModuleInterop": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "types": ["node"] 
   },
   "include": ["**/*"], 
   "exclude": ["node_modules", "dist", ".git"] 
