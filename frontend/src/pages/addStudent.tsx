@@ -43,10 +43,8 @@ const handleSubmit = async (e: React.FormEvent) => {
     const result = await response.json();
 
     if (response.ok) {
-      // 🔥 Sabse important step:
-      // Ye line 'students' key wale saare data ko stale mark kar degi
-      // Taaki jab tum navigate karo, toh List page naya data fetch kare
       await queryClient.invalidateQueries({ queryKey: ['students'] });
+      await queryClient.invalidateQueries({ queryKey: ['all-students-list'] });
 
       alert("Student added successfully!");
       navigate('/dashboard'); 

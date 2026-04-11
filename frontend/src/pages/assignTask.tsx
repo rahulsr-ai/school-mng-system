@@ -6,7 +6,6 @@ import { Loader2, BookOpen, UserCheck, Calendar, LayoutList } from 'lucide-react
 const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
 
 
-// Students fetch karne ke liye (Dropdown ke liye)
 const fetchAllStudents = async () => {
   const res = await fetch(`${apiUrl}/api/v1/admin/student/all?limit=1000`, { credentials: "include" });
   if (!res.ok) throw new Error("Failed to fetch students");
@@ -25,7 +24,6 @@ const AssignTask: React.FC = () => {
 
   const queryClient = useQueryClient();
 
-  // Students list for dropdown
   const { data: studentsData } = useQuery({
     queryKey: ['all-students-list'],
     queryFn: fetchAllStudents
