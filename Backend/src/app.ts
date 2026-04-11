@@ -14,6 +14,7 @@ dotenv.config({ path: ['.env.local', '.env'] });
 
 const app = express();
 
+app.use(cookieParser());
 app.use(cors(
     {
         origin: ["https://gridedu.netlify.app"], 
@@ -27,7 +28,6 @@ app.use(cors(
 connectDB()
 
 
-app.use(cookieParser());
 
 app.use(express.json());
 
