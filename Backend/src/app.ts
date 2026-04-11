@@ -16,7 +16,7 @@ const app = express();
 
 app.use(cors(
     {
-        origin: ["https://scholarsync-admin.netlify.app/"], 
+        origin: ["https://gridedu.netlify.app/"], 
         credentials: true,
         methods: ["GET", "POST", "PUT", "DELETE"],
     }
