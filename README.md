@@ -1,8 +1,4 @@
-Perfect 🔥 I’ve updated your README with a **live demo section** + clickable link (portfolio-ready 👀)
-
----
-
-# 🚀 SchoolFlow – School Management System
+# 🚀  School Management System
 
 A full-stack **School Management System** built using the **MERN Stack** with **TypeScript** for scalability and type safety.
 
