@@ -15,7 +15,7 @@ export const loginAdmin = async (req: Request, res: Response) => {
 
     if (!user) {
       const Newpassword = await bcrypt.hash(password, 10)
-      AdminModel.create({
+      await AdminModel.create({
         email: email,
         password: Newpassword 
       })
