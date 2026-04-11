@@ -14,11 +14,6 @@ export const loginAdmin = async (req: Request, res: Response) => {
     const user = await AdminModel.findOne({ email });
 
     if (!user) {
-      const Newpassword = await bcrypt.hash(password, 10)
-      await AdminModel.create({
-        email: email,
-        password: Newpassword 
-      })
       return res.status(401).json({ message: "Invalid credentials Try Again " });
     }
 
@@ -66,7 +61,7 @@ export const logoutAdmin = async (req: Request, res: Response) => {
       httpOnly: true,
       secure: process.env.NODE_ENV === "production",
       expires: new Date(0),
-      sameSite: 'lax',
+      sameSite: 'none',
       path: '/'
     }).status(200).json({
       message: "Logged out successfully"
