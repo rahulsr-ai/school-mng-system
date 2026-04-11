@@ -1,5 +1,5 @@
 import { Router } from "express"
-import { assignHomework, getAllTasks, updateHomeworkStatus } from "../controllers/task.controller"
+import { assignHomework, deleteSpecificTask, getAllTasks, updateHomeworkStatus } from "../controllers/task.controller"
 
 const taskRouter = Router()
 
@@ -13,6 +13,8 @@ const taskRouter = Router()
 taskRouter.post("/assign-homework/:id", assignHomework)
 taskRouter.post("/update/homework/:id", updateHomeworkStatus)
 taskRouter.get("/task/all", getAllTasks)
+taskRouter.get("/delete/homework", deleteSpecificTask)
+
 
 
 export default taskRouter

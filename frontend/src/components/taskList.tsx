@@ -1,6 +1,6 @@
-import React, { useState, useMemo } from 'react'; 
+import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Loader2, ChevronRight, CheckCircle2, X, User } from 'lucide-react';
+import { Loader2, ChevronRight, CheckCircle2, X, User, Trash2 } from 'lucide-react';
 const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
 
 
@@ -12,7 +12,7 @@ const fetchAllTasks = async () => {
 
 const TasksList: React.FC = () => {
   const queryClient = useQueryClient();
-  
+
   const [selectedStudentId, setSelectedStudentId] = useState<string | null>(null);
 
   const { data: tasks, isLoading } = useQuery({
@@ -43,6 +43,18 @@ const TasksList: React.FC = () => {
     },
   });
 
+  const deleteMutation = useMutation({
+    mutationFn: async (taskId: string) => {
+      await fetch(`${apiUrl}/api/v1/student/delete/homework/${taskId}`, {
+        method: "DELETE",
+        credentials: "include",
+      });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['all-tasks'] });
+    },
+  });
+
   const currentStudent = selectedStudentId ? groupedTasks[selectedStudentId] : null;
 
   return (
@@ -57,7 +69,7 @@ const TasksList: React.FC = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {Object.keys(groupedTasks || {}).map((id) => (
-            <div 
+            <div
               key={id}
               onClick={() => setSelectedStudentId(id)}
               className="bg-white p-6 rounded-3xl border-2 border-slate-50 hover:border-blue-100 hover:shadow-xl hover:shadow-blue-900/5 transition-all cursor-pointer flex items-center justify-between group"
@@ -83,7 +95,7 @@ const TasksList: React.FC = () => {
       {currentStudent && (
         <div className="fixed inset-0 z-100 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-slate-900/40 backdrop-blur-md animate-in fade-in" onClick={() => setSelectedStudentId(null)} />
-          
+
           <div className="relative bg-white w-full max-w-2xl rounded-[3rem] shadow-2xl overflow-hidden animate-in zoom-in duration-300">
             <div className="p-8 sm:p-12">
               <div className="flex justify-between items-start mb-8">
@@ -107,18 +119,29 @@ const TasksList: React.FC = () => {
                     </div>
 
                     <div className="flex items-center gap-3">
-                        <span className={`text-[10px] font-black uppercase px-3 py-1 rounded-full ${task.status === 'Completed' ? 'bg-green-100 text-green-600' : 'bg-amber-100 text-amber-600'}`}>
-                            {task.status}
-                        </span>
-                        {task.status === 'Pending' && (
-                            <button 
-                              onClick={() => statusMutation.mutate(task._id)}
-                              disabled={statusMutation.isPending}
-                              className="p-2.5 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all active:scale-90 cursor-pointer shadow-lg shadow-slate-200"
-                            >
-                              {statusMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle2 size={18} />}
-                            </button>
-                        )}
+
+                      <button
+                        onClick={() => {
+                          if (window.confirm("Delete this task?")) deleteMutation.mutate(task._id)
+                        }}
+                        className="p-2.5 text-rose-500 hover:bg-rose-50 rounded-xl transition-all cursor-pointer"
+                      >
+                        {deleteMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={18} />}
+                      </button>
+
+
+                      <span className={`text-[10px] font-black uppercase px-3 py-1 rounded-full ${task.status === 'Completed' ? 'bg-green-100 text-green-600' : 'bg-amber-100 text-amber-600'}`}>
+                        {task.status}
+                      </span>
+                      {task.status === 'Pending' && (
+                        <button
+                          onClick={() => statusMutation.mutate(task._id)}
+                          disabled={statusMutation.isPending}
+                          className="p-2.5 bg-slate-900 text-white rounded-xl hover:bg-blue-600 transition-all active:scale-90 cursor-pointer shadow-lg shadow-slate-200"
+                        >
+                          {statusMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <CheckCircle2 size={18} />}
+                        </button>
+                      )}
                     </div>
                   </div>
                 ))}

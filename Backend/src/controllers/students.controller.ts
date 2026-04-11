@@ -1,6 +1,7 @@
 import { Request, Response } from 'express';
 import StudentModel from '../models/student.model';
 import mongoose from 'mongoose';
+import TaskModel from '../models/task.model';
 
 export async function addNewStudent(req: Request, res: Response) {
     try {
@@ -157,6 +158,8 @@ export async function removeStudent(req: Request, res: Response) {
             });
         }
 
+
+        await TaskModel.deleteMany({ studentId: id });
    
         return res.status(200).json({
             message: "Student record deleted successfully",

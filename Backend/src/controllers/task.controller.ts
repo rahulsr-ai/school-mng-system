@@ -67,6 +67,42 @@ export async function updateHomeworkStatus(req: Request, res: Response) {
     }
 }
 
+
+export async function deleteSpecificTask(req: Request, res: Response) {
+    try {
+        const { taskId } = req.params;
+
+        if (!mongoose.Types.ObjectId.isValid(taskId as string)) {
+            return res.status(400).json({ 
+                message: "Invalid Task ID format" 
+            });
+        }
+
+        // 2. Task ko delete karo
+        const deletedTask = await TaskModel.findByIdAndDelete(taskId);
+
+        // 3. Agar task nahi mila (already deleted ya galat ID)
+        if (!deletedTask) {
+            return res.status(404).json({ 
+                message: "Task not found" 
+            });
+        }
+
+        return res.status(200).json({
+            message: "Task deleted successfully",
+            deletedId: taskId
+        });
+
+    } catch (error) {
+        console.error("Delete Task Error:", error);
+        return res.status(500).json({ 
+            message: "Internal Server Error while deleting task" 
+        });
+    }
+}
+
+
+
 // Route: /api/v1/admin/student/task/all
 export async function getAllTasks(req: Request, res: Response) {
     try {
