@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { Loader2, ChevronRight, CheckCircle2, X, User, Trash2 } from 'lucide-react';
+import { Loader2, ChevronRight, CheckCircle2, X, User } from 'lucide-react';
 const apiUrl = `${import.meta.env.VITE_API_URL}` || "http://localhost:8080";
 
 
@@ -43,17 +43,6 @@ const TasksList: React.FC = () => {
     },
   });
 
-  const deleteMutation = useMutation({
-    mutationFn: async (taskId: string) => {
-      await fetch(`${apiUrl}/api/v1/student/delete/homework/${taskId}`, {
-        method: "DELETE",
-        credentials: "include",
-      });
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['all-tasks'] });
-    },
-  });
 
   const currentStudent = selectedStudentId ? groupedTasks[selectedStudentId] : null;
 
@@ -120,14 +109,7 @@ const TasksList: React.FC = () => {
 
                     <div className="flex items-center gap-3">
 
-                      <button
-                        onClick={() => {
-                          if (window.confirm("Delete this task?")) deleteMutation.mutate(task._id)
-                        }}
-                        className="p-2.5 text-rose-500 hover:bg-rose-50 rounded-xl transition-all cursor-pointer"
-                      >
-                        {deleteMutation.isPending ? <Loader2 size={16} className="animate-spin" /> : <Trash2 size={18} />}
-                      </button>
+                    
 
 
                       <span className={`text-[10px] font-black uppercase px-3 py-1 rounded-full ${task.status === 'Completed' ? 'bg-green-100 text-green-600' : 'bg-amber-100 text-amber-600'}`}>

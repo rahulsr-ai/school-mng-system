@@ -45,7 +45,11 @@ const StudentsList: React.FC = () => {
       });
     },
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['students'] });
+   
+    queryClient.invalidateQueries({ queryKey: ['students'] });
+    queryClient.invalidateQueries({ queryKey: ['all-tasks'] }); 
+    queryClient.invalidateQueries({ queryKey: ['all-students-list'] });
+
       setDeleteId(null);
     }
   });
