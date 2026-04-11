@@ -3,10 +3,11 @@ import express from "express";
 import dotenv from 'dotenv';
 import cors from "cors";
 import cookieParser from 'cookie-parser';
-import connectDB from "../lib/db";
-import authRouter from "../routes/auth.routes";
-import studentRouter from "../routes/student.route";
-import taskRouter from "../routes/tasks.route";
+import connectDB from "./lib/db";
+import authRouter from "./routes/auth.routes";
+import studentRouter from "./routes/student.route";
+import taskRouter from "./routes/tasks.route";
+
 dotenv.config({ path: ['.env.local', '.env'] });
 
 
