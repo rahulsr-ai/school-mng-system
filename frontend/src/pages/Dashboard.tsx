@@ -21,11 +21,10 @@ const DashboardLayout: React.FC = () => {
     try {
       const response = await fetch(`${apiUrl}/api/v1/auth/logout`, {
         method: "POST",
-        credentials: "include", // Cookie clear karne ke liye zaroori hai
+        credentials: "include", 
       });
 
       if (response.ok) {
-        // localStorage clear karna secondary hai, main kaam API kar degi
         localStorage.removeItem("isAdmin");
         navigate("/");
       }
@@ -46,7 +45,7 @@ const DashboardLayout: React.FC = () => {
   return (
     <div className="flex h-screen bg-slate-50 text-slate-900 overflow-hidden">
       
-      {/* Mobile Overlay - Jab sidebar khule tab background dark ho jaye */}
+      {/* Mobile Overlay -*/}
       {isSidebarOpen && (
         <div 
           className="fixed inset-0 bg-slate-900/50 z-40 lg:hidden" 
@@ -83,7 +82,7 @@ const DashboardLayout: React.FC = () => {
               key={item.path}
               to={item.path}
               end={item.path === '/dashboard'}
-              onClick={() => setIsSidebarOpen(false)} // Mobile pe link click hote hi sidebar band ho jaye
+              onClick={() => setIsSidebarOpen(false)}
               className={({ isActive }) => `
                 flex items-center gap-4 px-4 py-3.5 rounded-xl font-semibold transition-all duration-200
                 ${isActive 

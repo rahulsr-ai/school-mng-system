@@ -37,8 +37,7 @@ const studentSchema = new Schema({
     }
 }, { timestamps: true });
 
-// 🛡️ UNIQUE CONSTRAINT (Compound Index)
-// Ek hi Class aur Section mein same Roll Number repeat nahi ho sakta.
+
 studentSchema.index({ class: 1, section: 1, rollno: 1 }, { unique: true });
 
 const StudentModel = model("student", studentSchema);

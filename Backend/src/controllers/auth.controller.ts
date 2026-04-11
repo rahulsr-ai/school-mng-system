@@ -84,7 +84,6 @@ export const verifyAdmin = async (req: Request, res: Response) => {
     });
   }
 
-  // 2. Token ko verify karna
   const secret = process.env.JWT_SECRET as string;
   const decoded = jwt.verify(token, secret) as { id: string };
 

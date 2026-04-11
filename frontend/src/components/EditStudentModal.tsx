@@ -21,7 +21,7 @@ export const EditStudentModal: React.FC<{ student: any; onClose: () => void }> =
   const mutation = useMutation({
     mutationFn: async (updatedData: any) => {
       const res = await fetch(`${apiUrl}/api/v1/admin/edit-student/${student._id}`, {
-        method: "POST", // Aapne POST bola hai, wese update ke liye PATCH/PUT standard hai
+        method: "POST", 
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(updatedData),
         credentials: "include"
